@@ -1,0 +1,13 @@
+## 冒烟测试用配置 - 验证流水线整条链路是否通
+## 预计耗时: 1-2 分钟
+## 任务量: 1 category × 2 scene × 1 signal = 2 个搜索任务
+## 跑完用 -max-per-keyword 5 控制详情抓取量
+
+categories:
+  - name: ai-roleplay
+    scene_words:
+      - DeepSeek 指令
+      - AI 剧本
+
+trade_signals:
+  - 合集

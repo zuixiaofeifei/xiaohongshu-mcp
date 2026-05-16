@@ -1,0 +1,40 @@
+## 智能需求挖掘 - 种子词配置
+##
+## 流水线会做 scene_words × trade_signals 的笛卡尔积生成搜索词。
+## - 控制总搜索量: len(scene_words) × len(trade_signals) × 类别数
+## - 首次跑用窄场景验证,确认信号准确率再扩品类。
+## - trade_signals 改动影响所有 category, 慎重添加。
+
+categories:
+  # 第一阶段窄验证: 只跑 AI 相关品类,人工标注后再扩
+  - name: ai-roleplay
+    scene_words:
+      - AI 剧本
+      - AI 陪聊
+      - AI 女友
+      - 角色扮演 AI
+      - DeepSeek 指令
+      - 高中模拟器
+
+  - name: ai-tools
+    scene_words:
+      - prompt 合集
+      - 提示词
+      - coze 智能体
+      - GPT 工具
+      - AI 工作流
+
+  - name: ai-services
+    scene_words:
+      - AI 简历润色
+      - AI 论文降重
+      - AI PPT 代做
+      - AI 头像定制
+
+# 交易信号词: 与上面的 scene_words 笛卡尔积拼接。留空 [] 则只用 scene 词搜索。
+trade_signals:
+  - 教程
+  - 合集
+  - 9.9
+  - 私
+  - 资料
