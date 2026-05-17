@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>Mining Harness - 机会清单</title>
+<style>
+  * { box-sizing: border-box; }
+  body { font: 14px/1.6 -apple-system, "PingFang SC", sans-serif; background: #f5f5f7; color: #1d1d1f; margin: 0; padding: 20px; }
+  h1 { margin: 0 0 8px; }
+  .header { max-width: 1100px; margin: 0 auto 24px; }
+  .meta { color: #666; font-size: 13px; }
+  .grid { max-width: 1100px; margin: 0 auto; display: grid; gap: 16px; }
+  .card { background: #fff; border-radius: 12px; padding: 18px 22px; box-shadow: 0 1px 3px rgba(0,0,0,.06); }
+  .card-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; margin-bottom: 10px; }
+  .title { font-size: 17px; font-weight: 600; margin: 0; flex: 1; }
+  .scores { display: flex; gap: 12px; align-items: center; white-space: nowrap; }
+  .badge { padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 600; }
+  .b-gold { background: #fff3cd; color: #856404; }
+  .b-mid  { background: #d1ecf1; color: #0c5460; }
+  .b-skip { background: #f0f0f0; color: #666; }
+  .b-score{ background: #e8f4ff; color: #0a66c2; }
+  .row { display: flex; gap: 24px; flex-wrap: wrap; margin: 6px 0; font-size: 13px; color: #555; }
+  .row b { color: #1d1d1f; }
+  .sells { font-size: 15px; margin: 8px 0; color: #1d1d1f; }
+  .reasons, .ideas { background: #fafafa; padding: 10px 14px; border-radius: 8px; margin-top: 8px; font-size: 13px; }
+  .reasons b, .ideas b { color: #0a66c2; }
+  .reasons ul, .ideas ul { margin: 4px 0 0; padding-left: 20px; }
+  .tags { margin-top: 8px; }
+  .tag { display: inline-block; background: #eef; padding: 2px 8px; border-radius: 4px; font-size: 12px; margin-right: 4px; color: #226; }
+  .footer { color: #888; font-size: 12px; margin-top: 10px; display: flex; gap: 14px; }
+  .footer a { color: #0a66c2; text-decoration: none; }
+  .empty { text-align: center; padding: 60px; color: #999; }
+</style>
+</head>
+<body>
+  <div class="header">
+    <h1>Mining Harness</h1>
+    <div class="meta">{{ len .Items }} 条机会(按综合分数排序)· DB: {{ .DBPath }}</div>
+  </div>
+
+  <div class="grid">
+    {{ range .Items }}
+    <div class="card">
+      <div class="card-head">
+        <h2 class="title">{{ .Note.Title }}</h2>
+        <div class="scores">
+          {{ if eq .Op.Verdict "高价值" }}<span class="badge b-gold">🏆 高价值</span>{{ end }}
+          {{ if eq .Op.Verdict "中等" }}<span class="badge b-mid">中等</span>{{ end }}
+          {{ if eq .Op.Verdict "跳过" }}<span class="badge b-skip">跳过</span>{{ end }}
+          <span class="badge b-score">分数 {{ .CompositeScore }}</span>
+        </div>
+      </div>
+
+      <div class="sells">💡 {{ .Op.WhatSells }}</div>
+
+      <div class="row">
+        <span><b>👍</b> {{ .Note.Metrics.Likes }}</span>
+        <span><b>⭐</b> {{ .Note.Metrics.Collects }}</span>
+        <span><b>💬</b> {{ .Note.Metrics.Comments }}</span>
+        <span><b>需求强度</b> {{ .Op.DemandStrength }}/10</span>
+        <span><b>技术化空间</b> {{ .Op.TechOptimizationScore }}/10</span>
+      </div>
+
+      <div class="row">
+        <span><b>变现</b> {{ .Op.MonetizationType }}</span>
+        <span><b>交付</b> {{ .Op.DeliveryForm }}</span>
+        {{ if .Op.PriceObserved }}<span><b>价格</b> {{ .Op.PriceObserved }}</span>{{ end }}
+      </div>
+
+      {{ if .Op.TechOptimizationReasons }}
+      <div class="reasons">
+        <b>为什么可以重做:</b>
+        <ul>{{ range .Op.TechOptimizationReasons }}<li>{{ . }}</li>{{ end }}</ul>
+      </div>
+      {{ end }}
+
+      {{ if .Op.ProductIdeas }}
+      <div class="ideas">
+        <b>产品化想法:</b>
+        <ul>{{ range .Op.ProductIdeas }}<li>{{ . }}</li>{{ end }}</ul>
+      </div>
+      {{ end }}
+
+      {{ if .Op.SimilarExistingExamples }}
+      <div class="tags">参考: {{ range .Op.SimilarExistingExamples }}<span class="tag">{{ . }}</span>{{ end }}</div>
+      {{ end }}
+
+      <div class="footer">
+        <span>👤 {{ .Note.Author.Nickname }}{{ if .Note.Author.IP }} · {{ .Note.Author.IP }}{{ end }}</span>
+        <span>🏷 {{ .Note.CategorySeed }}</span>
+        <a href="{{ .Note.URL }}" target="_blank">↗ 看原帖</a>
+        <span style="margin-left:auto">{{ .Op.VerdictReason }}</span>
+      </div>
+    </div>
+    {{ else }}
+    <div class="empty">还没有任何已分析的机会。先跑 <code>cmd/analyze</code> 把数据喂给 LLM。</div>
+    {{ end }}
+  </div>
+</body>
+</html>

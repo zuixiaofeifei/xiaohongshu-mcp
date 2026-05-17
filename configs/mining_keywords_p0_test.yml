@@ -1,0 +1,24 @@
+## P0 多样性验证: 挑 3 个从未验证过的 AI 子类
+## 目标: 看扩种子词后, 抓到的笔记是否真的离开了 "deepseek 指令" 主题
+## 预估: 3 × 平均 2.5 × 2 = 15 任务, 约 15-25 分钟
+
+categories:
+  - name: ai-entertainment-occult       # AI 玄学(占卜/塔罗)
+    scene_words:
+      - AI 占卜
+      - AI 塔罗
+
+  - name: ai-life-personal              # AI 生活实用(起名/旅游)
+    scene_words:
+      - AI 起名
+      - AI 取英文名
+      - AI 旅游攻略
+
+  - name: ai-content-image              # AI 视觉创作(头像/表情包)
+    scene_words:
+      - AI 头像
+      - AI 表情包
+
+trade_signals:
+  - 教程
+  - 9.9

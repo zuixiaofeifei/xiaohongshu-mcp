@@ -49,3 +49,7 @@ data/
 *.db-journal
 *.db-wal
 *.db-shm
+
+# LLM API 密钥(本地配置,绝不提交)
+configs/deepseek.yml
+configs/*_api.yml
